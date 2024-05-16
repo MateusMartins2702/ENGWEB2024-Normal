@@ -1,0 +1,17 @@
+
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - /home/mateus/ENGWEB2024-Normal/TesteWeb/contratos2024.json:/datasets/dataset.json
+    command: mongod --bind_ip_all
+    depends_on:
+      - mongo-seed
+  mongo-seed:
+    image: mongo:latest
+    volumes:
+      - /home/mateus/ENGWEB2024-Normal/TesteWeb/contratos2024.json:/datasets/dataset.json
+    command: mongoimport --host mongodb -d contratos -c contratos --type json --file /datasets/dataset.json --jsonArray
